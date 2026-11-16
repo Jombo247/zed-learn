@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,7 @@ body { margin:0; background:#f8fafc; padding-bottom:90px; }
 
 <div class="topbar">
 <b>🎓 ZED LEARN</b>
-<div><a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a></div>
+<div id="topActions"><a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a></div>
 </div>
 
 <div class="hero">
@@ -90,12 +91,26 @@ body { margin:0; background:#f8fafc; padding-bottom:90px; }
 
 <script>
 let u = JSON.parse(localStorage.getItem('zed_current_user')||'null');
+let topActions = document.getElementById('topActions');
 if(u){
   document.getElementById('welcomeName').textContent = 'Welcome ' + u.name + '! 👋';
   document.getElementById('xp').textContent = u.xp||0;
   document.getElementById('gems').textContent = u.gems||0;
   document.getElementById('streak').textContent = u.streak||0;
+  topActions.innerHTML = '<a href="dashboard.html">Dashboard</a> <a href="#" onclick="logout()" style="background:#facc15;color:#111;">Log Out</a>';
+} else {
+  document.getElementById('welcomeName').textContent = 'Welcome Guest! Please Log In 👋';
+  document.getElementById('xp').textContent = '0';
+  document.getElementById('gems').textContent = '0';
+  document.getElementById('streak').textContent = '0';
+  topActions.innerHTML = '<a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a>';
+}
+function logout(){
+  localStorage.removeItem('zed_current_user');
+  window.location.href = 'index.html?v=logout';
 }
 </script>
 </body>
 </html>
+
+
