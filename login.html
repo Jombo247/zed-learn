@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZED LEARN - Log In</title>
+<style>
+* { box-sizing: border-box; font-family: -apple-system, Arial, sans-serif; }
+body { margin:0; background:#f0f4ff; padding:16px; }
+.card { max-width:420px; margin:40px auto; background:white; border-radius:20px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+h1 { text-align:center; color:#1e3a8a; margin:0; font-size:26px; }
+p.sub { text-align:center; color:#666; margin:6px 0 20px; }
+label { display:block; font-size:13px; font-weight:700; margin:12px 0 4px; color:#333; }
+input { width:100%; padding:12px; border:1.5px solid #e5e7eb; border-radius:10px; font-size:15px; outline:none; }
+input:focus { border-color:#2563eb; }
+.btn { width:100%; background:#2563eb; color:white; border:none; padding:14px; border-radius:12px; font-size:16px; font-weight:800; margin-top:18px; cursor:pointer; }
+.btn2 { width:100%; background:#f1f5f9; color:#1e3a8a; border:none; padding:12px; border-radius:12px; font-size:14px; font-weight:700; margin-top:10px; cursor:pointer; }
+.link { text-align:center; margin-top:14px; font-size:14px; }
+.link a { color:#2563eb; font-weight:700; text-decoration:none; }
+.msg { text-align:center; padding:10px; border-radius:10px; margin-top:12px; font-size:14px; display:none; }
+.msg.err { background:#fee2e2; color:#991b1b; display:block; }
+.msg.ok { background:#dcfce7; color:#166534; display:block; }
+.admin-box { background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:12px; margin-top:16px; font-size:12px; color:#92400e; text-align:center; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎓 ZED LEARN</h1>
+<p class="sub">Welcome back! Log in to continue</p>
+
+<form onsubmit="login(event)">
+<label>Phone Number</label>
+<input id="phone" required type="text" placeholder="Phone you registered with or 'admin'">
+
+<label>Password</label>
+<input id="password" required type="password" placeholder="Your password">
+
+<div id="msg" class="msg"></div>
+<button class="btn" type="submit">Log In →</button>
+</form>
+
+<button class="btn2" onclick="quickDemo()">Try Demo Account - Student</button>
+
+<div class="admin-box">
+<b>Admin Login (For You, Themba)</b><br>
+Phone: <b>admin</b> &nbsp; Password: <b>admin123</b><br>
+Change this password later in admin dashboard.
+</div>
+
+<div class="link">No account? <a href="register.html">Create Account</a><br><br><a href="index.html">← Back to Home</a></div>
+</div>
+
+<script>
+function showMsg(text, type){
+  const m = document.getElementById('msg');
+  m.textContent = text;
+  m.className = 'msg ' + type;
+}
+
+function login(e){
+  e.preventDefault();
+  const phone = document.getElementById('phone').value.trim();
+  const pass = document.getElementById('password').value;
+
+  // ADMIN - built-in
+  if(phone === 'admin' && pass === 'admin123'){
+    const adminUser = { name: 'Themba (Admin)', phone: 'admin', role: 'admin', xp: 9999, gems: 999, streak: 99 };
+    localStorage.setItem('zed_current_user', JSON.stringify(adminUser));
+    showMsg('✅ Welcome Admin! Opening dashboard...', 'ok');
+    setTimeout(()=>{ window.location.href = 'dashboard.html'; }, 1000);
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem('zed_users')||'[]');
+  const user = users.find(u=>u.phone===phone && u.password===pass);
+  if(!user){
+    showMsg('❌ Wrong phone or password. Try again or create account.', 'err');
+    return;
+  }
+
+  // Check if teacher / lecturer / school needs approval
+  if((user.role==='teacher' || user.role==='lecturer' || user.role==='school') && user.status==='pending'){
+    showMsg('⏳ Your account is waiting for Admin approval. Please check back soon.', 'err');
+    return;
+  }
+
+  localStorage.setItem('zed_current_user', JSON.stringify(user));
+  showMsg('✅ Welcome ' + user.name + '! Opening your dashboard...', 'ok');
+  setTimeout(()=>{ window.location.href = 'dashboard.html'; }, 1000);
+}
+
+function quickDemo(){
+  const demo = { name: 'Demo Student', phone: '0977000000', role: 'student', xp: 250, gems: 10, streak: 3, grade: 'Form 1' };
+  localStorage.setItem('zed_current_user', JSON.stringify(demo));
+  window.location.href = 'dashboard.html';
+}
+</script>
+</body>
+</html>
+
+
