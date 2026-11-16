@@ -77,7 +77,7 @@ function sendOTP(){
   document.getElementById('sendBtn').textContent = 'OTP Sent! Check Email ✓';
   document.getElementById('sendBtn').disabled = true;
   setTimeout(()=>{ document.getElementById('sendBtn').disabled=false; document.getElementById('sendBtn').textContent='Resend OTP'; }, 30000);
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: email, email: email, to_name: name, name: name, otp_code: generatedOTP, passcode: generatedOTP, time: "15 minutes" }).then(()=>{ showSuccess('OTP sent to ' + email + '. Check your inbox / spam.'); }).catch((err)=>{ showError('Email failed. Error: ' + JSON.stringify(err)); });
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: email, email: email, to_name: name, name: name, otp_code: generatedOTP, passcode: generatedOTP, time: "15 minutes" }, EMAILJS_PUBLIC_KEY).then(()=>{ showSuccess('OTP sent to ' + email + '. Check your inbox / spam.'); }).catch((err)=>{ showError('Email failed. Error: ' + JSON.stringify(err)); });
 }
 function verifyOTP(){
   let entered = document.getElementById('otpInput').value.trim();
