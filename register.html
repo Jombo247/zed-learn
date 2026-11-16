@@ -4,153 +4,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZED LEARN - Create Account</title>
+<title>Register - ZED LEARN</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
-* { box-sizing: border-box; font-family: -apple-system, Arial, sans-serif; }
-body { margin:0; background:#f0f4ff; padding:16px; }
-.card { max-width:480px; margin:0 auto; background:white; border-radius:20px; padding:20px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
-h1 { text-align:center; color:#1e3a8a; margin:0; font-size:26px; }
-p.sub { text-align:center; color:#666; margin:6px 0 18px; }
-.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
-.role-btn { border:2px solid #e5e7eb; background:white; border-radius:14px; padding:14px 8px; cursor:pointer; font-size:14px; font-weight:700; }
-.role-btn.active { border-color:#2563eb; background:#eff6ff; color:#2563eb; }
-label { display:block; font-size:13px; font-weight:700; margin:12px 0 4px; color:#333; }
-input, select { width:100%; padding:12px; border:1.5px solid #e5e7eb; border-radius:10px; font-size:15px; outline:none; }
-input:focus { border-color:#2563eb; }
-.hidden { display:none; }
-.btn { width:100%; background:#2563eb; color:white; border:none; padding:14px; border-radius:12px; font-size:16px; font-weight:800; margin-top:18px; cursor:pointer; }
-.btn:disabled { opacity:0.5; }
-.link { text-align:center; margin-top:14px; font-size:14px; }
-.link a { color:#2563eb; font-weight:700; text-decoration:none; }
-.msg { text-align:center; padding:10px; border-radius:10px; margin-top:12px; font-size:14px; display:none; }
-.msg.ok { background:#dcfce7; color:#166534; display:block; }
+* { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
+body { margin:0; background:#f8fafc; padding:16px; }
+.topbar { background:#1e3a8a; color:white; padding:14px 16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; }
+.topbar a { color:white; text-decoration:none; font-weight:700; }
+.card { background:white; margin-top:16px; border-radius:16px; padding:20px; max-width:420px; margin-left:auto; margin-right:auto; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.card h1 { margin:0 0 6px; font-size:22px; }
+.card p { color:#666; font-size:13px; margin:0 0 16px; }
+label { font-size:13px; font-weight:700; display:block; margin:12px 0 6px; }
+input, select { width:100%; padding:13px; border:1px solid #ddd; border-radius:12px; font-size:15px; background:#f9fafb; }
+.btn { width:100%; background:#facc15; color:#111; border:none; padding:15px; border-radius:12px; font-size:16px; font-weight:800; margin-top:16px; cursor:pointer; }
+.btn.green { background:#22c55e; color:white; }
+.btn:disabled { background:#ddd; color:#888; }
+.otpBox { display:none; }
+.success { background:#dcfce7; border:1px solid #22c55e; border-radius:12px; padding:12px; font-size:13px; margin-top:14px; display:none; }
+.error { background:#fee2e2; border:1px solid #ef4444; border-radius:12px; padding:12px; font-size:13px; margin-top:14px; display:none; }
+.note { background:#fef9c3; border:1px dashed #facc15; border-radius:12px; padding:12px; font-size:13px; margin-top:14px; }
+.row { display:flex; gap:8px; }
+.row input { flex:1; }
+.row button { background:#1e3a8a; color:white; border:none; padding:13px 14px; border-radius:12px; font-weight:800; cursor:pointer; }
 </style>
 </head>
 <body>
+<div class="topbar"><b>🎓 ZED LEARN</b><a href="index.html">🏠 Home</a></div>
 <div class="card">
-<h1>🎓 ZED LEARN</h1>
-<p class="sub">Create your free account</p>
-
-<p style="font-weight:800; font-size:14px; margin:0 0 8px;">Who are you?</p>
-<div class="role-grid">
-<button class="role-btn" data-role="student" onclick="pickRole('student',this)">🎓 Student</button>
-<button class="role-btn" data-role="parent" onclick="pickRole('parent',this)">👨‍👩‍👧 Parent</button>
-<button class="role-btn" data-role="teacher" onclick="pickRole('teacher',this)">👩‍🏫 Teacher</button>
-<button class="role-btn" data-role="lecturer" onclick="pickRole('lecturer',this)">👨‍🏫 Lecturer</button>
-<button class="role-btn" data-role="school" onclick="pickRole('school',this)" style="grid-column:span 2;">🏫 School / University</button>
+<h1>Create Account 🔐</h1>
+<p>Register with Email OTP - We will send a 6-digit code to your email.</p>
+<label>👤 Full Name</label>
+<input id="name" placeholder="e.g. Themba Ndhlovu">
+<label>📧 Email Address</label>
+<input id="email" type="email" placeholder="e.g. themba@gmail.com">
+<label>🔒 Password</label>
+<input id="password" type="password" placeholder="Min 6 characters">
+<label>🎓 Role</label>
+<select id="role"><option value="student">Student</option><option value="teacher">Teacher</option><option value="parent">Parent</option></select>
+<button class="btn" id="sendBtn" onclick="sendOTP()">Send OTP to Email →</button>
+<div class="otpBox" id="otpBox">
+<label>🔢 Enter 6-Digit Code From Email</label>
+<div class="row"><input id="otpInput" placeholder="e.g. 482913" maxlength="6" inputmode="numeric"><button onclick="sendOTP()">Resend</button></div>
+<p style="font-size:12px; color:#888; margin:8px 0 0;">Code expires in 15 minutes. Check Spam / Promotions folder.</p>
+<button class="btn green" onclick="verifyOTP()">✅ Verify & Create Account</button>
 </div>
-
-<form id="regForm" onsubmit="register(event)">
-<!-- COMMON -->
-<label>Full Name *</label>
-<input id="fullName" required placeholder="e.g. Themba Ndhlovu">
-
-<label>Phone Number *</label>
-<input id="phone" required type="tel" placeholder="e.g. 0977 123456">
-
-<label>Password *</label>
-<input id="password" required type="password" placeholder="Min 6 characters" minlength="6">
-
-<!-- STUDENT -->
-<div id="f-student" class="hidden">
-<label>Grade / Form *</label>
-<select id="studentGrade">
-<option>Grade 6</option><option>Grade 7</option>
-<option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 4</option>
-<option>Form 5</option><option>Form 6</option>
-</select>
-<label>School Name *</label>
-<input id="studentSchool" placeholder="e.g. Lusaka Boys">
+<div class="success" id="successBox"></div>
+<div class="error" id="errorBox"></div>
+<div class="note">ℹ️ ZED LEARN will never ask for your code. Don't share it.</div>
+<p style="text-align:center; font-size:13px; margin-top:16px;">Already have account? <a href="login.html"><b>Log In</b></a></p>
 </div>
-
-<!-- PARENT -->
-<div id="f-parent" class="hidden">
-<label>Child's Full Name *</label>
-<input id="childName" placeholder="e.g. Chanda Ndhlovu">
-<label>Child's Grade / Form *</label>
-<select id="childGrade">
-<option>Grade 6</option><option>Grade 7</option>
-<option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 4</option><option>Form 5</option><option>Form 6</option>
-</select>
-</div>
-
-<!-- TEACHER -->
-<div id="f-teacher" class="hidden">
-<label>Subject You Teach *</label>
-<select id="teacherSubject">
-<option>Maths</option><option>English</option><option>Science</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>ICT</option><option>Other</option>
-</select>
-<label>School Name *</label>
-<input id="teacherSchool" placeholder="School where you teach">
-<label>NRC / TSC Number</label>
-<input id="teacherId" placeholder="e.g. 123456/11/1">
-</div>
-
-<!-- LECTURER -->
-<div id="f-lecturer" class="hidden">
-<label>University / College *</label>
-<input id="lecturerUni" placeholder="e.g. UNZA, Mulungushi">
-<label>Department / Faculty *</label>
-<input id="lecturerDept" placeholder="e.g. School of Education">
-</div>
-
-<!-- SCHOOL -->
-<div id="f-school" class="hidden">
-<label>School / University Name *</label>
-<input id="schoolName" placeholder="e.g. Lusaka Secondary School">
-<label>Admin / Head Name *</label>
-<input id="schoolAdmin" placeholder="Headteacher / Registrar name">
-<label>District *</label>
-<select id="schoolDistrict">
-<option>Lusaka</option><option>Kitwe</option><option>Ndola</option><option>Livingstone</option><option>Chipata</option><option>Kabwe</option><option>Other</option>
-</select>
-</div>
-
-<div id="msg" class="msg"></div>
-<button class="btn" id="submitBtn" type="submit" disabled>Select a role above to continue</button>
-</form>
-
-<div class="link">Already have an account? <a href="login.html">Log in</a><br><br><a href="index.html">← Back to Home</a></div>
-</div>
-
 <script>
-let selectedRole = '';
-function pickRole(role, el){
-  selectedRole = role;
-  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  ['student','parent','teacher','lecturer','school'].forEach(r=>{
-    document.getElementById('f-'+r).classList.add('hidden');
-  });
-  document.getElementById('f-'+role).classList.remove('hidden');
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = false;
-  btn.textContent = 'Create ' + role.charAt(0).toUpperCase()+role.slice(1) + ' Account →';
-}
-
-function register(e){
-  e.preventDefault();
-  if(!selectedRole){ alert('Please choose who you are first'); return; }
-  const name = document.getElementById('fullName').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const pass = document.getElementById('password').value;
-  let extra = {};
-  if(selectedRole==='student') extra = { grade: document.getElementById('studentGrade').value, school: document.getElementById('studentSchool').value };
-  if(selectedRole==='parent') extra = { childName: document.getElementById('childName').value, childGrade: document.getElementById('childGrade').value };
-  if(selectedRole==='teacher') extra = { subject: document.getElementById('teacherSubject').value, school: document.getElementById('teacherSchool').value, staffId: document.getElementById('teacherId').value, status: 'pending' };
-  if(selectedRole==='lecturer') extra = { university: document.getElementById('lecturerUni').value, dept: document.getElementById('lecturerDept').value, status: 'pending' };
-  if(selectedRole==='school') extra = { schoolName: document.getElementById('schoolName').value, adminName: document.getElementById('schoolAdmin').value, district: document.getElementById('schoolDistrict').value, status: 'pending' };
-
+const EMAILJS_PUBLIC_KEY = "YvSaZEleaEGqj7Kcj";
+const EMAILJS_SERVICE_ID = "service_1p5j995";
+const EMAILJS_TEMPLATE_ID = "template_1yn97vd";
+emailjs.init(EMAILJS_PUBLIC_KEY);
+let generatedOTP = "";
+let otpTime = 0;
+function showError(m){ let e=document.getElementById('errorBox'); e.style.display='block'; e.textContent='❌ '+m; document.getElementById('successBox').style.display='none'; }
+function showSuccess(m){ let s=document.getElementById('successBox'); s.style.display='block'; s.textContent='✅ '+m; document.getElementById('errorBox').style.display='none'; }
+function sendOTP(){
+  let name = document.getElementById('name').value.trim();
+  let email = document.getElementById('email').value.trim().toLowerCase();
+  let pass = document.getElementById('password').value;
+  if(name.length < 3) return showError('Enter your full name');
+  if(!email.includes('@') || !email.includes('.')) return showError('Enter a valid email');
+  if(pass.length < 6) return showError('Password must be at least 6 characters');
   let users = JSON.parse(localStorage.getItem('zed_users')||'[]');
-  if(users.find(u=>u.phone===phone)){
-    alert('This phone is already registered. Please log in.'); return;
-  }
-  users.push({ name, phone, password: pass, role: selectedRole, xp:0, gems:0, streak:0, createdAt: new Date().toISOString(), ...extra });
+  if(users.find(u=>u.email===email)) return showError('This email is already registered. Please Log In.');
+  generatedOTP = Math.floor(100000 + Math.random()*900000).toString();
+  otpTime = Date.now();
+  document.getElementById('otpBox').style.display = 'block';
+  document.getElementById('sendBtn').textContent = 'OTP Sent! Check Email ✓';
+  document.getElementById('sendBtn').disabled = true;
+  setTimeout(()=>{ document.getElementById('sendBtn').disabled=false; document.getElementById('sendBtn').textContent='Resend OTP'; }, 30000);
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: email, email: email, to_name: name, name: name, otp_code: generatedOTP, passcode: generatedOTP, time: "15 minutes" }).then(()=>{ showSuccess('OTP sent to ' + email + '. Check your inbox / spam.'); }).catch((err)=>{ showError('Email failed. Error: ' + JSON.stringify(err)); });
+}
+function verifyOTP(){
+  let entered = document.getElementById('otpInput').value.trim();
+  let name = document.getElementById('name').value.trim();
+  let email = document.getElementById('email').value.trim().toLowerCase();
+  let pass = document.getElementById('password').value;
+  let role = document.getElementById('role').value;
+  if(entered.length !== 6) return showError('Enter 6-digit code');
+  if(Date.now() - otpTime > 15*60*1000) return showError('Code expired. Tap Resend.');
+  if(entered !== generatedOTP) return showError('Wrong code. Try again.');
+  let users = JSON.parse(localStorage.getItem('zed_users')||'[]');
+  let newUser = { name:name, email:email, password:pass, role:role, xp:0, gems:0, streak:1, verified:true, createdAt: new Date().toISOString() };
+  users.push(newUser);
   localStorage.setItem('zed_users', JSON.stringify(users));
-  const msg = document.getElementById('msg');
-  msg.textContent = '✅ Account created! Redirecting to login...';
-  msg.className = 'msg ok';
-  setTimeout(()=>{ window.location.href='login.html'; }, 1500);
+  localStorage.setItem('zed_current_user', JSON.stringify(newUser));
+  showSuccess('Account verified! Welcome ' + name + '! Redirecting...');
+  setTimeout(()=>{ window.location.href = 'dashboard.html'; }, 1500);
 }
 </script>
 </body>
