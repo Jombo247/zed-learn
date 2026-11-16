@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZED LEARN - Dashboard</title>
+<style>
+* { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
+body { margin:0; background:#f0f4ff; padding:14px; padding-bottom:90px; }
+.top { background:#1e3a8a; color:white; border-radius:18px; padding:18px; }
+.top h1 { margin:0; font-size:22px; }
+.top p { margin:6px 0 0; opacity:0.9; font-size:14px; }
+.stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 0; }
+.stat { background:white; border-radius:14px; padding:12px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+.stat b { display:block; font-size:20px; color:#1e3a8a; }
+.stat span { font-size:12px; color:#666; }
+.card { background:white; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+.card h3 { margin:0 0 10px; font-size:16px; color:#1e3a8a; }
+.btn { display:block; width:100%; background:#2563eb; color:white; border:none; padding:13px; border-radius:11px; font-size:15px; font-weight:800; margin-top:8px; cursor:pointer; text-align:center; text-decoration:none; }
+.btn.green { background:#16a34a; }
+.btn.orange { background:#ea580c; }
+.btn.grey { background:#e5e7eb; color:#111; }
+.user-row { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding:10px 0; font-size:14px; }
+.user-row:last-child { border:none; }
+.small-btn { background:#16a34a; color:white; border:none; padding:6px 10px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; }
+.small-btn.red { background:#dc2626; }
+.nav { position:fixed; bottom:0; left:0; right:0; background:white; display:flex; justify-content:space-around; padding:12px; border-top:1px solid #eee; }
+.nav a { text-decoration:none; color:#1e3a8a; font-weight:700; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="top">
+<h1 id="welcome">Welcome!</h1>
+<p id="roleLabel">Loading...</p>
+</div>
+
+<div class="stats">
+<div class="stat"><b id="xp">0</b><span>⭐ XP</span></div>
+<div class="stat"><b id="gems">0</b><span>💎 Gems</span></div>
+<div class="stat"><b id="streak">0</b><span>🔥 Streak</span></div>
+</div>
+
+<!-- STUDENT -->
+<div id="view-student" class="card" style="display:none;">
+<h3>🎓 Student Dashboard</h3>
+<p id="studentInfo" style="font-size:14px; color:#555;"></p>
+<a class="btn" href="index.html">📝 Take a Quiz</a>
+<a class="btn green" href="index.html">📚 Continue Learning</a>
+<button class="btn orange" onclick="alert('Leaderboard coming soon! You are Top 10 in Zambia!')">🏆 View Leaderboard</button>
+</div>
+
+<!-- PARENT -->
+<div id="view-parent" class="card" style="display:none;">
+<h3>👨‍👩‍👧 Parent Dashboard</h3>
+<p id="parentInfo" style="font-size:14px; color:#555;"></p>
+<div style="background:#eff6ff; padding:12px; border-radius:10px; font-size:14px;">
+<b>Child Progress This Week</b><br>Quizzes Done: 3<br>Average Score: 78%<br>XP Earned: 350<br>Keep encouraging them! 👏
+</div>
+</div>
+
+<!-- TEACHER / LECTURER -->
+<div id="view-teacher" class="card" style="display:none;">
+<h3>👩‍🏫 Teacher / Lecturer Dashboard</h3>
+<p id="teacherInfo" style="font-size:14px; color:#555;"></p>
+<button class="btn" onclick="alert('Quiz Creator coming next! You will add questions here.')">➕ Create New Quiz</button>
+<button class="btn green" onclick="alert('My Students: 12 students, Avg 72%')">👥 My Students (12)</button>
+<button class="btn orange" onclick="alert('Class Performance: Form 1 Maths - 72% average')">📊 Class Performance</button>
+</div>
+
+<!-- SCHOOL -->
+<div id="view-school" class="card" style="display:none;">
+<h3>🏫 School / University Dashboard</h3>
+<p id="schoolInfo" style="font-size:14px; color:#555;"></p>
+<div style="background:#f0fdf4; padding:12px; border-radius:10px; font-size:14px;">
+<b>School Overview</b><br>Total Students: 45<br>Total Teachers: 6<br>School Average: 74%<br>Top Class: Form 2
+</div>
+<button class="btn" onclick="alert('Add Teacher - invite via phone number')">➕ Add Teacher</button>
+<button class="btn green" onclick="alert('Add Student - invite via phone number')">➕ Add Student</button>
+</div>
+
+<!-- ADMIN -->
+<div id="view-admin" class="card" style="display:none;">
+<h3>⚙️ Administrator Dashboard - Themba</h3>
+<p style="font-size:14px; color:#555;">You control everything.</p>
+<div id="adminStats" style="background:#fffbeb; padding:12px; border-radius:10px; font-size:14px; margin-bottom:10px;"></div>
+<h3 style="margin-top:14px;">Pending Approvals</h3>
+<div id="pendingList"></div>
+<h3 style="margin-top:14px;">All Users</h3>
+<div id="allUsers"></div>
+<button class="btn" onclick="alert('Manage Questions - coming next file!')">📝 Manage Questions</button>
+</div>
+
+<button class="btn grey" onclick="logout()">Log Out</button>
+
+<div class="nav">
+<a href="index.html">Home</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+
+<script>
+let user = JSON.parse(localStorage.getItem('zed_current_user')||'null');
+if(!user){
+  // If no login yet, show demo Themba like in your screenshot
+  user = { name:'Themba', role:'student', xp:0, gems:0, streak:0, grade:'Form 1' };
+}
+document.getElementById('welcome').textContent = 'Welcome ' + user.name + '!';
+document.getElementById('roleLabel').textContent = 'Role: ' + user.role.toUpperCase() + (user.grade ? ' • ' + user.grade : '') + (user.school ? ' • ' + user.school : '');
+document.getElementById('xp').textContent = user.xp||0;
+document.getElementById('gems').textContent = user.gems||0;
+document.getElementById('streak').textContent = user.streak||0;
+
+if(user.role==='student') document.getElementById('view-student').style.display='block';
+if(user.role==='parent'){
+  document.getElementById('view-parent').style.display='block';
+  document.getElementById('parentInfo').textContent = 'Child: ' + (user.childName||'Your child') + ' • Grade: ' + (user.childGrade||'');
+}
+if(user.role==='teacher' || user.role==='lecturer'){
+  document.getElementById('view-teacher').style.display='block';
+  document.getElementById('teacherInfo').textContent = (user.subject||user.dept||'') + ' • ' + (user.school||user.university||'');
+}
+if(user.role==='school'){
+  document.getElementById('view-school').style.display='block';
+  document.getElementById('schoolInfo').textContent = (user.schoolName||user.name) + ' • ' + (user.district||'');
+}
+if(user.role==='student'){
+  document.getElementById('studentInfo').textContent = 'Grade: ' + (user.grade||'Form 1') + ' • School: ' + (user.school||'Zambia');
+}
+if(user.role==='admin'){
+  document.getElementById('view-admin').style.display='block';
+  let users = JSON.parse(localStorage.getItem('zed_users')||'[]');
+  let counts = {};
+  users.forEach(u=>{ counts[u.role]=(counts[u.role]||0)+1; });
+  document.getElementById('adminStats').innerHTML = 'Total Users: <b>'+users.length+'</b><br>Students: '+(counts.student||0)+' • Parents: '+(counts.parent||0)+' • Teachers: '+(counts.teacher||0)+' • Lecturers: '+(counts.lecturer||0)+' • Schools: '+(counts.school||0);
+  let pending = users.filter(u=>u.status==='pending');
+  document.getElementById('pendingList').innerHTML = pending.length ? '' : '<p style="font-size:13px; color:#666;">No pending approvals. ✅</p>';
+  pending.forEach((u,i)=>{
+    let div = document.createElement('div');
+    div.className='user-row';
+    div.innerHTML = '<span><b>'+u.name+'</b><br><small>'+u.role+' • '+u.phone+'</small></span><button class="small-btn" onclick="approve('+users.indexOf(u)+')">Approve</button>';
+    document.getElementById('pendingList').appendChild(div);
+  });
+  document.getElementById('allUsers').innerHTML = users.length ? '' : '<p style="font-size:13px; color:#666;">No users yet. Share register link!</p>';
+  users.forEach(u=>{
+    let div = document.createElement('div');
+    div.className='user-row';
+    div.innerHTML = '<span><b>'+u.name+'</b><br><small>'+u.role+' • '+u.phone+' • '+(u.status||'active')+'</small></span>';
+    document.getElementById('allUsers').appendChild(div);
+  });
+}
+function approve(idx){
+  let users = JSON.parse(localStorage.getItem('zed_users')||'[]');
+  users[idx].status='approved';
+  localStorage.setItem('zed_users', JSON.stringify(users));
+  alert('Approved! They can now log in.');
+  location.reload();
+}
+function logout(){
+  localStorage.removeItem('zed_current_user');
+  window.location.href='login.html';
+}
+</script>
+</body>
+</html>
+
+
