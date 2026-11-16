@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZED MARKET - Taxi, Food, School, Jobs in One Place 🇿🇲</title>
+<style>
+* { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
+body { margin:0; background:#f8fafc; padding-bottom:90px; }
+.topbar { background:#111; color:white; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
+.topbar b { font-size:19px; }
+.topbar b span { color:#facc15; }
+.topbar a { color:#111; background:#facc15; text-decoration:none; font-size:13px; font-weight:800; padding:8px 12px; border-radius:20px; }
+.hero { background:linear-gradient(135deg,#111,#1e3a8a); color:white; padding:22px 16px; }
+.hero h1 { margin:0; font-size:26px; line-height:1.2; }
+.hero p { color:#cbd5e1; margin:8px 0 0; font-size:14px; }
+.wallet { background:white; margin:-10px 16px 0; border-radius:16px; padding:14px; box-shadow:0 4px 16px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; position:relative; }
+.wallet b { font-size:18px; }
+.wallet small { color:#666; display:block; }
+.wallet button { background:#22c55e; color:white; border:none; padding:10px 14px; border-radius:20px; font-weight:800; }
+.grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 16px; }
+.tile { background:white; border-radius:16px; padding:14px 8px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.06); text-decoration:none; color:#111; }
+.tile span { font-size:28px; display:block; }
+.tile b { display:block; font-size:13px; margin:6px 0 2px; }
+.tile small { color:#666; font-size:11px; line-height:1.2; display:block; }
+.tile.hot { border:2px solid #facc15; }
+.section { padding:6px 16px; }
+.section h2 { font-size:18px; margin:14px 0 10px; }
+.deal { background:white; border-radius:16px; padding:12px; margin-bottom:10px; display:flex; gap:12px; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+.deal img { width:64px; height:64px; border-radius:12px; background:#fef3c7; display:flex; align-items:center; justify-content:center; font-size:28px; }
+.deal b { font-size:14px; display:block; }
+.deal small { color:#666; font-size:12px; }
+.deal button { background:#111; color:white; border:none; padding:9px 12px; border-radius:10px; font-weight:700; white-space:nowrap; }
+.forumCard { background:white; border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+.forumCard b { font-size:14px; }
+.forumCard p { font-size:13px; color:#555; margin:6px 0; }
+.jobCard { background:#fff7e6; border-radius:16px; padding:14px; margin-bottom:10px; border:1px solid #fde68a; }
+.jobCard b { font-size:15px; }
+.nav { position:fixed; bottom:0; left:0; right:0; background:white; display:flex; justify-content:space-around; padding:14px; border-top:1px solid #eee; }
+.nav a { text-decoration:none; color:#111; font-weight:700; font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="topbar"><b>ZED <span>MARKET</span> 🇿🇲</b><a href="#" onclick="alert('Login coming - use ZED LEARN login for now'); return false;">Log In</a></div>
+
+<div class="hero">
+<h1>One App.<br>Everything Zambia.</h1>
+<p>🚖 Taxi • 🌽 Farmers • 🛒 Shop • 🎓 School • 💬 Forum • 💼 Jobs</p>
+</div>
+
+<div class="wallet">
+<div><small id="welcomeName">Welcome Guest! 👋</small><b>Wallet: K<span id="walletBal">0</span></b><small>Cash + MTN MoMo + Airtel</small></div>
+<button onclick="topup()">+ Top Up</button>
+</div>
+
+<div class="grid">
+<a class="tile hot" href="yanga-rider.html"><span>🚖</span><b>Yanga Taxi</b><small>Book Ride<br>K63 Matero-Town</small></a>
+<a class="tile" href="#" onclick="goFarm(); return false;"><span>🌽</span><b>Zed Farmers</b><small>Tomatoes, Maize<br>Direct from farm</small></a>
+<a class="tile" href="#" onclick="goShop(); return false;"><span>🛒</span><b>Supermarket</b><small>Mealie Meal<br>Oil, Soap</small></a>
+<a class="tile" href="index.html"><span>🎓</span><b>ZED LEARN</b><small>School, Quiz<br>Earn XP</small></a>
+<a class="tile" href="#" onclick="goForum(); return false;"><span>💬</span><b>Forum</b><small>Ask Zambia<br>1.2k online</small></a>
+<a class="tile" href="#" onclick="goJobs(); return false;"><span>💼</span><b>Jobs</b><small>Driver, Maid<br>Teacher - Apply</small></a>
+</div>
+
+<div class="section">
+<h2>🔥 Today's Deals in Lusaka</h2>
+
+<div class="deal"><div style="font-size:28px;">🍅</div><div style="flex:1;"><b>Tomatoes - Matero Farmer</b><small>Fresh today • 1 heap K20 • Delivery K15</small></div><button onclick="order('Tomatoes K20')">Order</button></div>
+
+<div class="deal"><div style="font-size:28px;">🚖</div><div style="flex:1;"><b>Yanga Promo - Matero to Town</b><small>Today only • Was K63, Now <b style="color:#16a34a;">K50</b></small></div><button onclick="window.location.href='yanga-rider.html'">Book</button></div>
+
+<div class="deal"><div style="font-size:28px;">🌽</div><div style="flex:1;"><b>White Maize 50kg - Chisamba</b><small>K350 / bag • Farmer: Mr. Banda • 0977 123 456</small></div><button onclick="order('Maize 50kg K350')">Order</button></div>
+
+<div class="deal"><div style="font-size:28px;">🛒</div><div style="flex:1;"><b>Breakfast Mealie Meal 10kg</b><small>K185 • Shop: Kamwala • Free delivery over K300</small></div><button onclick="order('Mealie Meal K185')">Add</button></div>
+
+<h2>💼 Jobs Near You</h2>
+<div class="jobCard"><b>🚖 Driver Needed - Yanga Lusaka</b><small>K3,500 / month + commission • Must have License + Car</small><br><button onclick="alert('Application sent! We will call you.')" style="background:#111;color:white;border:none;padding:9px 12px;border-radius:8px;margin-top:8px;font-weight:700;">Apply Now</button></div>
+<div class="jobCard"><b>👩‍🏫 Teacher - Private School, Chelston</b><small>K4,000 / month • Maths & Science • Grade 8-9</small><br><button onclick="alert('Application sent!')" style="background:#111;color:white;border:none;padding:9px 12px;border-radius:8px;margin-top:8px;font-weight:700;">Apply Now</button></div>
+
+<h2>💬 Forum - Ask Zambia</h2>
+<div class="forumCard"><b>❓ Where to find cheap fertilizer in Lusaka?</b><p>John M. • Matero • 23 replies • "Try Kamwala, K450 for D Compound..."</p><button onclick="goForum()" style="background:#e5e7eb;border:none;padding:8px 12px;border-radius:8px;font-weight:700;">View Answers →</button></div>
+<div class="forumCard"><b>❓ Best school for Grade 8 in Kabwata?</b><p>Grace P. • Kabwata • 14 replies</p><button onclick="goForum()" style="background:#e5e7eb;border:none;padding:8px 12px;border-radius:8px;font-weight:700;">View Answers →</button></div>
+
+</div>
+
+<div class="nav">
+<a href="market.html">🏠 Market</a>
+<a href="yanga-rider.html">🚖 Yanga</a>
+<a href="index.html">🎓 Learn</a>
+<a href="#" onclick="goJobs(); return false;">💼 Jobs</a>
+</div>
+
+<script>
+let u = JSON.parse(localStorage.getItem('zed_current_user')||'null');
+let bal = parseInt(localStorage.getItem('zed_wallet')||'0');
+if(u){
+  document.getElementById('welcomeName').textContent = 'Welcome ' + u.name + '! 👋';
+}
+document.getElementById('walletBal').textContent = bal;
+function topup(){
+  let amt = prompt('How much to Top Up via MoMo? e.g. 50');
+  if(!amt) return;
+  bal += parseInt(amt)||0;
+  localStorage.setItem('zed_wallet', bal);
+  document.getElementById('walletBal').textContent = bal;
+  alert('Top Up request sent! Pay to 0977 000 000 via MoMo. Wallet will update. Amount: K'+amt);
+}
+function order(item){
+  alert(item + ' added to cart! Farmer/Shop will call you to confirm delivery. Pay Cash or MoMo on delivery.');
+}
+function goFarm(){ alert('🌽 Zed Farmers page coming next! Tell me: Build Farmers'); }
+function goShop(){ alert('🛒 Supermarket page coming next! Tell me: Build Shop'); }
+function goForum(){ alert('💬 Forum page coming next! Tell me: Build Forum'); }
+function goJobs(){ alert('💼 Jobs page coming next! Tell me: Build Jobs'); }
+</script>
+</body>
+</html>
+
+
