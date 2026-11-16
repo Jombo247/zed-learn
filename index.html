@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZED LEARN - Learn Smart. Pass Big.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🎓 ZED LEARN</h1>
+  <p>Learn Smart. Pass Big. Win Your Future.</p>
+  <p><small>Zambia 2023 CBC Curriculum • Grade 1-6 • Form 1-4 • Form 5-6</small></p>
+</header>
+
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('quizzes')">Quizzes</button>
+  <button onclick="showPage('leaderboard')">Leaderboard</button>
+  <button onclick="showPage('profile')">Profile</button>
+</nav>
+
+<div id="home" class="page">
+  <h2>Welcome Themba!</h2>
+  <div class="card">
+    <p>⭐ XP: <span id="xp">0</span> | 💎 Gems: <span id="gems">0</span> | 🔥 Streak: <span id="streak">0</span> days</p>
+  </div>
+  <h3>Choose Your Level</h3>
+  <div class="card" onclick="startQuiz('Grade 6 Maths')"><b>Primary Grade 6</b><br>Maths • English • Science</div>
+  <div class="card" onclick="startQuiz('Form 1 Maths')"><b>Form 1 - O Level [2023 CBC]</b><br>Maths • Biology • Chemistry • Physics • Computer Science</div>
+  <div class="card" onclick="startQuiz('Form 4 Maths')"><b>Form 4 - O Level [2023 CBC]</b><br>Maths • Biology • Chemistry • Physics</div>
+  <div class="card" onclick="startQuiz('Grade 12 Maths')"><b>Grade 12 [2013 Legacy - Until 2028]</b><br>Maths • English • Biology</div>
+</div>
+
+<div id="quizzes" class="page" style="display:none">
+  <h2>Quizzes</h2>
+  <div id="quiz-box" class="card">
+    <p>Tap a subject on Home to start.</p>
+  </div>
+</div>
+
+<div id="leaderboard" class="page" style="display:none">
+  <h2>🏆 Lusaka Leaderboard</h2>
+  <div class="card">1. Chipo M. - 1,250 XP - Lusaka Girls</div>
+  <div class="card">2. Mwila K. - 1,100 XP - Kabulonga</div>
+  <div class="card">3. Themba - 950 XP - Lusaka</div>
+  <div class="card">4. Grace N. - 900 XP - Matero</div>
+</div>
+
+<div id="profile" class="page" style="display:none">
+  <h2>My Profile</h2>
+  <div class="card">
+    <p><b>Name:</b> Themba</p>
+    <p><b>Level:</b> Form 1</p>
+    <p><b>School:</b> Lusaka</p>
+    <p><b>Weak Subject:</b> Physics - Needs Practice</p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
