@@ -7,7 +7,7 @@
 <title>ZED LEARN - Learn Smart. Pass Big.</title>
 <style>
 * { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
-body { margin:0; background:#f8fafc; padding-bottom:90px; }
+body { margin:0; background:#f8fafc; padding-bottom:80px; }
 .topbar { background:#1e3a8a; color:white; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
 .topbar b { font-size:18px; }
 .topbar a { color:white; text-decoration:none; font-size:13px; font-weight:700; background:#2563eb; padding:8px 12px; border-radius:20px; }
@@ -34,8 +34,8 @@ body { margin:0; background:#f8fafc; padding-bottom:90px; }
 .feat span { font-size:24px; }
 .feat b { display:block; margin:6px 0 2px; font-size:14px; }
 .feat small { color:#666; font-size:12px; }
-.nav { position:fixed; bottom:0; left:0; right:0; background:white; display:flex; justify-content:space-around; padding:14px; border-top:1px solid #eee; }
-.nav a { text-decoration:none; color:#1e3a8a; font-weight:700; font-size:14px; }
+.nav { position:fixed; bottom:0; left:0; right:0; background:white; display:flex; justify-content:center; padding:14px; border-top:1px solid #eee; }
+.nav a { text-decoration:none; color:#1e3a8a; font-weight:800; font-size:15px; }
 </style>
 </head>
 <body>
@@ -82,17 +82,13 @@ body { margin:0; background:#f8fafc; padding-bottom:90px; }
 </div>
 </div>
 
-<div class="nav" id="bottomNav">
-<a href="index.html">Home</a>
-<a href="dashboard.html">Dashboard</a>
-<a href="login.html">Login</a>
-<a href="register.html">Join</a>
+<div class="nav">
+<a href="index.html">🏠 Home</a>
 </div>
 
 <script>
 let u = JSON.parse(localStorage.getItem('zed_current_user')||'null');
 let topActions = document.getElementById('topActions');
-let bottomNav = document.getElementById('bottomNav');
 if(u){
   let displayName = u.name;
   if(u.email==='admin' || u.username==='admin' || u.role==='admin') displayName = u.name + ' (Admin)';
@@ -101,14 +97,9 @@ if(u){
   document.getElementById('gems').textContent = u.gems||0;
   document.getElementById('streak').textContent = u.streak||0;
   topActions.innerHTML = '<a href="dashboard.html">Dashboard</a> <a href="#" onclick="logout()" style="background:#facc15;color:#111;">Log Out</a>';
-  bottomNav.innerHTML = '<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="#" onclick="logout()">Log Out</a>';
 } else {
   document.getElementById('welcomeName').textContent = 'Welcome Guest! Please Log In 👋';
-  document.getElementById('xp').textContent = '0';
-  document.getElementById('gems').textContent = '0';
-  document.getElementById('streak').textContent = '0';
   topActions.innerHTML = '<a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a>';
-  bottomNav.innerHTML = '<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="login.html">Login</a><a href="register.html">Join</a>';
 }
 function logout(){
   localStorage.removeItem('zed_current_user');
