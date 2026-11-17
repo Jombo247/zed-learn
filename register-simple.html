@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register - ZED LEARN</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 * { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
 body { margin:0; background:#f8fafc; padding:16px; }
@@ -44,7 +45,7 @@ input, select { width:100%; padding:13px; border:1px solid #ddd; border-radius:1
 <div class="otpBox" id="otpBox">
 <label>🔢 Enter 6-Digit Code From Email</label>
 <div class="row"><input id="otpInput" placeholder="e.g. 482913" maxlength="6" inputmode="numeric"><button onclick="sendOTP()">Resend</button></div>
-<p style="font-size:12px; color:#888; margin:8px 0 0;">Code expires in 15 minutes. Check Spam / Promotions folder. First time? Check your email for a FormSubmit activation link and tap it once.</p>
+<p style="font-size:12px; color:#888; margin:8px 0 0;">Code expires in 15 minutes. Check Spam / Promotions folder.</p>
 <button class="btn green" onclick="verifyOTP()">✅ Verify & Create Account</button>
 </div>
 <div class="success" id="successBox"></div>
@@ -53,11 +54,15 @@ input, select { width:100%; padding:13px; border:1px solid #ddd; border-radius:1
 <p style="text-align:center; font-size:13px; margin-top:16px;">Already have account? <a href="login.html"><b>Log In</b></a></p>
 </div>
 <script>
+const PK = "YvSaZEleaEGqJ7kCj";
+const SID = "service_1p5j995";
+const TID = "template_1yn97vd";
+emailjs.init(PK);
 let generatedOTP = "";
 let otpTime = 0;
 function showError(m){ let e=document.getElementById('errorBox'); e.style.display='block'; e.textContent='❌ '+m; document.getElementById('successBox').style.display='none'; }
 function showSuccess(m){ let s=document.getElementById('successBox'); s.style.display='block'; s.textContent='✅ '+m; document.getElementById('errorBox').style.display='none'; }
-async function sendOTP(){
+function sendOTP(){
   let name = document.getElementById('name').value.trim();
   let email = document.getElementById('email').value.trim().toLowerCase();
   let pass = document.getElementById('password').value;
@@ -69,30 +74,10 @@ async function sendOTP(){
   generatedOTP = Math.floor(100000 + Math.random()*900000).toString();
   otpTime = Date.now();
   document.getElementById('otpBox').style.display = 'block';
-  document.getElementById('sendBtn').textContent = 'Sending... Please wait';
+  document.getElementById('sendBtn').textContent = 'Sending...';
   document.getElementById('sendBtn').disabled = true;
-  try{
-    let res = await fetch('https://formsubmit.co/ajax/thembandhlovu24@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        subject: 'ZED LEARN OTP - ' + generatedOTP,
-        message: 'Hello ' + name + ',\n\nYour ZED LEARN verification code is: ' + generatedOTP + '\n\nIt expires in 15 minutes.\n\nIf you did not request this, ignore this email.\n\n- ZED LEARN Team',
-        _template: 'table',
-        _captcha: 'false'
-      })
-    });
-    // FormSubmit sends the email to YOUR inbox (thembandhlovu24@gmail.com) - we also show the code logic below
-    // For real users, we forward the code via the user's own email flow - see note
-    document.getElementById('sendBtn').textContent = 'OTP Sent! Check Email ✓';
-    showSuccess('OTP sent! If you used your own email, check inbox / spam. First time: check thembandhlovu24@gmail.com for activation link and tap it once.');
-    setTimeout(()=>{ document.getElementById('sendBtn').disabled=false; document.getElementById('sendBtn').textContent='Resend OTP'; }, 30000);
-  }catch(e){
-    document.getElementById('sendBtn').disabled=false;
-    showError('Could not send email. Check internet and try again.');
-  }
+  setTimeout(()=>{ document.getElementById('sendBtn').disabled=false; document.getElementById('sendBtn').textContent='Resend OTP'; }, 30000);
+  emailjs.send(SID, TID, { to_email: email, email: email, to_name: name, name: name, passcode: generatedOTP, otp_code: generatedOTP, time: "15 minutes" }, PK).then(()=>{ showSuccess('OTP sent to ' + email + '. Check inbox / spam.'); }).catch((err)=>{ showError('Email failed: ' + JSON.stringify(err) + ' | Your code for testing is: ' + generatedOTP); });
 }
 function verifyOTP(){
   let entered = document.getElementById('otpInput').value.trim();
