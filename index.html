@@ -4,108 +4,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZED LEARN - Learn Smart. Pass Big.</title>
+<title>ZED LEARN - Learn Zambian Curriculum</title>
 <style>
 * { box-sizing:border-box; font-family:-apple-system, Arial, sans-serif; }
-body { margin:0; background:#f8fafc; padding-bottom:80px; }
-.topbar { background:#1e3a8a; color:white; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
-.topbar b { font-size:18px; }
-.topbar a { color:white; text-decoration:none; font-size:13px; font-weight:700; background:#2563eb; padding:8px 12px; border-radius:20px; }
-.hero { background:linear-gradient(135deg,#1e3a8a,#2563eb); color:white; padding:28px 18px; text-align:center; }
-.hero h1 { margin:0; font-size:28px; line-height:1.2; }
-.hero p { opacity:0.9; font-size:15px; margin:10px 0 18px; }
-.hero-btn { display:inline-block; background:#facc15; color:#111; font-weight:800; padding:13px 22px; border-radius:30px; text-decoration:none; font-size:15px; margin:4px; }
-.hero-btn.white { background:white; }
-.welcome { margin:16px; background:white; border-radius:16px; padding:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; justify-content:space-between; align-items:center; }
-.welcome b { font-size:18px; }
-.stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:0 16px; }
-.stat { background:white; border-radius:14px; padding:12px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-.stat b { display:block; font-size:18px; color:#1e3a8a; }
-.stat span { font-size:11px; color:#666; }
-.section { padding:18px 16px 0; }
-.section h2 { font-size:19px; margin:0 0 12px; color:#111; }
-.card { background:white; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); display:flex; justify-content:space-between; align-items:center; }
-.card b { font-size:16px; display:block; }
-.card small { color:#666; }
-.card span { font-size:28px; }
-.go { background:#2563eb; color:white; border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
-.features { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 16px; }
-.feat { background:white; border-radius:14px; padding:14px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-.feat span { font-size:24px; }
-.feat b { display:block; margin:6px 0 2px; font-size:14px; }
-.feat small { color:#666; font-size:12px; }
-.nav { position:fixed; bottom:0; left:0; right:0; background:white; display:flex; justify-content:center; padding:14px; border-top:1px solid #eee; }
-.nav a { text-decoration:none; color:#1e3a8a; font-weight:800; font-size:15px; }
+body { margin:0; background:#f8fafc; padding:16px; }
+.topbar { background:#1e3a8a; color:white; padding:14px 16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; }
+.topbar a { color:white; text-decoration:none; font-weight:700; }
+.hero { background:white; margin-top:16px; border-radius:16px; padding:24px 20px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.hero h1 { margin:0 0 8px; font-size:26px; line-height:1.2; }
+.hero p { color:#666; font-size:14px; margin:0 0 18px; }
+.btn { display:block; background:#facc15; color:#111; padding:15px; border-radius:12px; font-size:16px; font-weight:800; text-decoration:none; margin-top:12px; }
+.btn.dark { background:#1e3a8a; color:white; }
+.cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.card { background:white; border-radius:16px; padding:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.card h3 { margin:0 0 6px; font-size:16px; }
+.card p { margin:0; color:#666; font-size:13px; }
+.footer { text-align:center; color:#888; font-size:12px; margin-top:20px; }
 </style>
 </head>
 <body>
-
-<div class="topbar">
-<b>🎓 ZED LEARN</b>
-<div id="topActions"><a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a></div>
-</div>
-
+<div class="topbar"><b>🎓 ZED LEARN</b><a href="login.html">Log In</a></div>
 <div class="hero">
-<h1>Learn Smart.<br>Pass Big.<br>Win Your Future. 🇿🇲</h1>
-<p>Zambia 2023 CBC Curriculum • Grade 1-6 • Form 1-4 • Form 5-6 • University</p>
-<a class="hero-btn" href="register.html">Create Free Account →</a><br>
-<a class="hero-btn white" href="dashboard.html">Go to My Dashboard</a>
+<h1>Learn Zambian Curriculum<br>Grade 1 - 12 🇿🇲</h1>
+<p>Quizzes, Notes, Past Papers, XP, Gems & Streaks. Free for every Zambian learner.</p>
+<a class="btn" href="register-simple.html">Join Free →</a>
+<a class="btn dark" href="login.html">Log In</a>
 </div>
-
-<div class="welcome">
-<div><b id="welcomeName">Welcome Guest! 👋</b><br><small style="color:#666;">Keep your streak going!</small></div>
-<div style="font-size:28px;">🔥</div>
+<div class="cards">
+<div class="card"><h3>📝 Quizzes</h3><p>Maths, English, Science & more</p></div>
+<div class="card"><h3>📚 Notes</h3><p>Simple notes for every topic</p></div>
+<div class="card"><h3>🏆 XP & Gems</h3><p>Earn rewards as you learn</p></div>
+<div class="card"><h3>🔥 Streaks</h3><p>Come back daily, keep your streak</p></div>
 </div>
-
-<div class="stats">
-<div class="stat"><b id="xp">0</b><span>⭐ XP Points</span></div>
-<div class="stat"><b id="gems">0</b><span>💎 Gems</span></div>
-<div class="stat"><b id="streak">0</b><span>🔥 Day Streak</span></div>
-</div>
-
-<div class="section">
-<h2>📚 Choose Your Level</h2>
-<div class="card"><div><b>Primary - Grade 6</b><small>Maths • English • Science</small></div><span>📘</span></div>
-<div class="card"><div><b>Secondary - Form 1-4</b><small>Maths • English • Biology • Chemistry • Physics</small></div><span>📗</span></div>
-<div class="card"><div><b>A-Level - Form 5-6</b><small>Advanced Maths • Sciences</small></div><span>📙</span></div>
-<div class="card"><div><b>University / College</b><small>Courses • Assignments</small></div><span>🎓</span></div>
-<button class="go" style="width:100%; padding:14px;" onclick="window.location.href='dashboard.html'">Start Learning Now →</button>
-</div>
-
-<div class="section">
-<h2>✨ Why ZED LEARN?</h2>
-<div class="features">
-<div class="feat"><span>🏆</span><b>Leaderboard</b><small>Compete across Zambia</small></div>
-<div class="feat"><span>💎</span><b>Earn Gems</b><small>Get rewarded for learning</small></div>
-<div class="feat"><span>📱</span><b>Works Offline</b><small>Learn even with low data</small></div>
-<div class="feat"><span>👨‍👩‍👧</span><b>For Parents</b><small>Track your child</small></div>
-</div>
-</div>
-
-<div class="nav">
-<a href="index.html">🏠 Home</a>
-</div>
-
-<script>
-let u = JSON.parse(localStorage.getItem('zed_current_user')||'null');
-let topActions = document.getElementById('topActions');
-if(u){
-  let displayName = u.name;
-  if(u.email==='admin' || u.username==='admin' || u.role==='admin') displayName = u.name + ' (Admin)';
-  document.getElementById('welcomeName').textContent = 'Welcome ' + displayName + '! 👋';
-  document.getElementById('xp').textContent = u.xp||0;
-  document.getElementById('gems').textContent = u.gems||0;
-  document.getElementById('streak').textContent = u.streak||0;
-  topActions.innerHTML = '<a href="dashboard.html">Dashboard</a> <a href="#" onclick="logout()" style="background:#facc15;color:#111;">Log Out</a>';
-} else {
-  document.getElementById('welcomeName').textContent = 'Welcome Guest! Please Log In 👋';
-  topActions.innerHTML = '<a href="login.html">Log In</a> <a href="register.html" style="background:#facc15;color:#111;">Join Free</a>';
-}
-function logout(){
-  localStorage.removeItem('zed_current_user');
-  window.location.href = 'index.html?v=logout';
-}
-</script>
+<p class="footer">ZED LEARN • Made in Zambia • Free Forever</p>
 </body>
 </html>
 
